@@ -6,9 +6,25 @@
 
     <main>
         <div>
-          <h1> Existing Surveys </h1>     
+          <h1>  <%= title %> </h1>     
         </div>
 
+        <br>
+        <a href="/survey" class="btn btn-primary" role="button">
+                <i class="fas fa-plus-circle"></i> Create a Survey</a>
+         <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Survey Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Take Quiz</th>
+                </tr>
+              </thead>
+
+            <!--TODO: Fill out table rows with surveys from Database -->
+          </table>
+
+          
         <style>
             h1{
               text-align: center;
