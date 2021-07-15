@@ -1,0 +1,69 @@
+<% include ../partials/header.ejs %>
+<%- include ../partials/mainNav.ejs %>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+          <h3>Favourite Books List </h3>
+          <!-- ------------------------ -->
+          <!-- FIX THE ADD BUTTON BELOW -->
+          <!-- ------------------------ -->
+          <a href="" class="btn btn-primary"><i class="fa fa-plus"></i> Create a Survey</a>
+          <br>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Survey Name</th>
+                  <th class="text-center">Survey Owner</th>
+                  <th class="text-center">Survey Title</th>
+                  <th class="text-center">Created Date</th>
+                  <th class="text-center"></th>
+                  <th class="text-center"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Template Row -->
+                <% for (let count = 0; count < survey.length; count++) { %>
+                <tr>
+                  
+                  <td><%= survey[count].surveyName %></td>
+                  <td class="text-center"><%= survey[count].surveyOwner %></td>
+                  <td class="text-center"><%= survey[count].surveyName %></td>
+                   <!-- 
+                 <td class="text-center">
+                   <%=// survey[count].createdDate.toLocaleDateString([], {}) + ", " + survey[count].createdDate.toLocaleTimeString('en-US')%> </td>
+                     -->
+                  <td class="text-center"><%= survey[count].createdDate%></td>
+
+                  <td class="text-center">
+                    <!-- ----------EDIT------- -->
+                    
+                    <a href="/books/<%=survey[count]._id %>" class="btn btn-primary btn-sm">
+                     
+                    <i class="fas fa-pencil-alt"></i>View
+                  </td>
+
+                  <td class="text-center">
+                    <!-- ---------DELETE----------- -->
+                    <a href="/books/delete/<%=survey[count]._id %>" class="btn btn-danger btn-sm">
+                      <i class="fas fa-trash alt"></i>Delete
+                      </a>   
+                    <!-- ------------------------ -->
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+           <div class="col-md-offset-1 col-md-10 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% include ../partials/footer.ejs %>
+
+
