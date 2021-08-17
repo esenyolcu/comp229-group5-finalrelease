@@ -5,18 +5,14 @@
     <div class="container">
       <div class="row">
         <div class="col-md-offset-1 col-md-10">
-          <h3>  <% title %> </h3>
-          <% if(typeof displayName === 'string' && displayName ){ %>
-          <a href="surveys/add" class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Create a Survey</a>
-          <% } %>
+          <h3>Existing Survey List </h3>
+        
           <br>
           <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
-                  <% if(typeof displayName === 'string' && displayName ){ %>
-                     
-                    
+                  <% if(typeof displayName == 'string' && displayName ){ %>
                     <th>Survey Name</th>
                     <th class="text-center">Survey Owner</th>
                     <th class="text-center">Create Date</th>
@@ -26,7 +22,6 @@
                     <th class="text-center"></th>
 
                     <% } else {%>
-                      <H3>LOGIN / REGISTER TO CREATE AND MANAGE SURVEY</H3>
                   <th>Survey Name</th>
                   <th class="text-center">Survey Owner</th>
                   <th class="text-center">Create Date</th>
@@ -37,8 +32,6 @@
                 </tr>
                 </thead>
                 <tbody> 
-                  
-                  <% if(typeof displayName === 'string' && displayName ){ %>
                 <% for (let count = 0; count < survey.length; count++) { %>
                 <tr>
                   
@@ -50,29 +43,18 @@
                   <td class="text-center"><%= survey[count].startDate%></td>
                   <td class="text-center"><%= survey[count].endDate%></td>
 
-                  <% if(typeof displayName == 'string' && displayName ){ %> 
                   <td class="text-center">
                     <!-- ----------EDIT------- -->
 
                  
                      
                     
-                    <a href="/surveys/<%=survey[count]._id %>" class="btn btn-primary btn-sm">
+                    <a href="/surveys/takeasurvey/<%=survey[count]._id %>" class="btn btn-primary btn-sm">
                      
-                    <i class="fas fa-pencil-alt"></i>View
+                    <i class="fas fa-pencil-alt"></i>Take Survey
                   </td>
-
-                  <td class="text-center">
-                    <!-- ---------DELETE----------- -->
-                    <a href="/surveys/delete/<%=survey[count]._id %>" class="btn btn-danger btn-sm">
-                      <i class="fas fa-trash alt"></i>Delete
-                      </a>   
-                    <!-- ------------------------ -->
-                  </td>
-               
-                <% } %>
+ 
               </tr>
-                <% } %>
                 <% } %>
               </tbody>
             </table>

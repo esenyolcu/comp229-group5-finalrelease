@@ -1,0 +1,273 @@
+<% include ../partials/header.ejs %>
+<%- include ../partials/mainNav.ejs %>
+
+<style>
+    #ijsQuestionlength
+    {
+        display:none ;
+    }
+    hr{
+      display: none;
+    }
+
+</style>
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+          <h1><%= title %></h1>
+            <form class="form" method="post" id="form">
+
+              <% if(survey.Questionnaire_type=="multiplechoice"){ %>
+                <div class="sticky btn btn-primary" id="addQuestion"><i class="fa fa-check-square-o"></i> Add Question</div>
+            
+                <% } %>
+
+                <% if(survey.Questionnaire_type=="true_or_false"){ %>
+                  <div class=" sticky btn btn-primary" id="addQuestiontf" onclick="triggertf()"><i class="fa fa-check-square-o"></i> Add Question</div>
+              
+                  <% } %>
+
+              <div class="form-group">
+                <label for="surveyNameTextField">Survey Type</label>
+ 
+                <input type="text" class="form-control" id="surveyNameTextField"
+                placeholder="Survey Name" name="Questionnaire_type" value="<%= survey.Questionnaire_type %>" required readonly>
+              </div>
+              <div class="form-group">
+                <label for="surveyNameTextField">Survey Name</label>
+ 
+                <input type="text" class="form-control" id="surveyNameTextField"
+                placeholder="Survey Name" name="surveyName" value="<%= survey.surveyName %>" required>
+              </div>
+              <div class="form-group">
+                <label for="startDateField">Start Date</label>
+                <input type="text" class="form-control" id="startDateField"
+                placeholder="Start Date" name="startDate" value="<%= survey.startDate %>"  required>
+              </div>
+              <div class="form-group">
+                <label for="endDateField">End Date</label>
+                <input type="text" class="form-control" id="endDateField"
+                placeholder="End Date" name="endDate" value="<%= survey.endDate %>"  required>
+              </div>
+              <div class="form-group">
+                <label for="surveyDescription">Description</label>
+                <textarea name="surveyDescription" class="form-control" id="surveyDescription"><%= survey.surveyDescription %> </textarea>
+ 
+              </div>
+
+
+              <!--Dynamically add questions-->
+              <% var ql=survey.Questionlength;%>
+        <%  if(survey.Questionnaire_type=="multiplechoice") { %>  
+
+          <input id="ijsQuestionlength" name="Questionlength" value ="<%= survey.Questionlength %>">
+<% for (let count = 0; count < survey.Questionlength; count++) { %>
+
+   
+  
+
+    <%
+    let name =`Question${count+1}`;
+    
+%>
+    
+       
+      <div class="form-group question" id="" >
+        <hr class="questionline">
+        <label for="Question 1"> 
+
+ 
+        <%= name %>
+
+        </label>
+
+        <input type="text" class="form-control" id="Question1" placeholder=" Question 1" name="<%= name %>"
+            value=" <%= survey[name] %>" required>
+ 
+        <div class="answerCategory" id="answerCategory">
+                        <% //get answerlength %>
+                         <% let anslength=name+"AnswerLength" %>
+ 
+            <% for (let count = 0; count < survey[anslength]; count++) { %>
+
+              
+            
+           <div id="answerSett" class="anAnswer" style="display: inline-block;">
+            <label for="<%= name+"Answer"+(count+1)%>" style="display: inline-block;">  <%= "Answer"+" "+(count+1 )%></label>
+
+            <input type="text" class="form-control" id="<%= name+"Answer"+(count+1)%>" placeholder="   " name="<%= name+"Answer"+(count+1)%>"
+                value=" <%= survey[name+"Answer"+(count+1)] %>" required style="width: 300px;display: inline-block;">
+            </div>
+
+                    <% } %>
+
+                    
+
+            <div class="btn btn-primary" style="display:inline-block" id="addAnswer" onclick="trigger2(this)"><i
+                class="fa fa-check-square-o"></i> Add Answer</div>
+        </div>
+        <hr class="questionline">
+        </div> 
+    <% } %>
+    <% } %>
+
+ 
+
+    <!--True or False-->
+    <%  if(survey.Questionnaire_type=="true_or_false") { %>  
+
+      <input id="ijsQuestionlength" name="Questionlengthtf" value ="<%= survey.Questionlengthtf %>">
+            
+        <% for (let cnt = 0; cnt < survey.Questionlengthtf; cnt++) { %>
+
+          
+        
+           
+            
+        
+            <%
+            let name =`Question${cnt+1}`;
+            
+        %>
+            
+               
+              <div class="form-group question" id="" >
+                <hr class="questionline">
+                <label for="Question 1"> 
+        
+         
+                <%= name %>
+        
+                </label>
+        
+                <input type="text" class="form-control" id="Question1" placeholder=" Question 1" name="<%= name %>"
+                    value=" <%= survey[name] %>" required>
+         
+                <div class="answerCategory" id="answerCategory">
+                                <% //get answerlength %>
+                                 <% let anslength=name+"AnswerLength" %>
+         
+                    <% for (let count = 0; count < survey[anslength]; count++) { %>
+                    
+                   <div id="answerSett" class="anAnswer" style="display: inline-block;">
+                    <label for="<%= name+"Answer"+(count+1)%>" style="display: inline-block;"> </label>
+                    
+                        User options are True and False<br><br>
+                     </div>
+        
+                            <% } %>
+        
+                            
+        
+                  <!-- <div class="btn btn-primary" style="display:inline-block" id="addAnswer" onclick="trigger2(this)"><i
+                        class="fa fa-check-square-o"></i> Add Answer</div> -->
+                        
+                </div>
+                <hr class="questionline">
+                </div> 
+            <% } %>
+             
+            <% } %>
+        
+      
+        
+            <!---->
+
+
+
+              <button type="submit" id="mcSubmit" class="btn btn-primary "><i class="fa fa-check-square-o"></i> Submit</button>
+              <a href="/surveys" class="btn btn-warning"><i class="fa fa-undo"></i> Cancel</a>
+            
+             <!--  Add Questions-->
+                <!-- this button replicates the question sample when clicked-->
+               
+                <input type="text" name="" value="" style="display: none;">
+            </form>
+
+                    <!--Make template questionnaire builder invisible -->
+                  
+                    <div class="form-group question" id="question_sample" style="display: none;">
+
+                      
+  <input type="text" class="answerlength" value="<%= survey.Questionlength %>" style="display:;"> 
+                      <hr class="questionline">
+                      <label for="Question 1">Question 1</label>
+  
+                      <input type="text" class="form-control" id="Question1" placeholder=" Question 1" name="Question"
+                          value="" required>
+  
+                      <!--Answer category -->
+                      <div class="answerCategory" id="answerCategory">
+                         
+                         <div id="answerSet" class="anAnswer" style="display: inline-block;">
+                          <label for="Answer1" style="display: inline-block;">Answer 1</label>
+                            
+                          <input type="text" class="form-control" id="Answer1" placeholder=" Answer 1" name="Answer1"
+                              value="" required style="width: 300px;display: inline-block;">
+                                
+                         
+                          </div>
+  
+                          <div class="btn btn-primary" style="display:inline-block" id="addAnswer" onclick="trigger2(this)"><i
+                                  class="fa fa-check-square-o"></i> Add Answer</div>
+  
+  
+                      </div>
+                      <hr class="questionline">
+                      </div> 
+                      <br><br><br>
+
+
+                      <div class="form-group question " id="question_sampletf" style="display: none;">
+                        <hr class="questionline">
+                        <label for="Question 1">Question 1</label>
+            
+                        <input type="text" class="form-control" id="Question1" placeholder=" Question 1" name="Question" value=""
+                          required>
+            
+                        <!--Answer category -->
+                        <div class="answerCategory" id="answerCategory">
+            
+                          <div id="answerSettf" class="anAnswer" style="display: inline-block;">
+            
+                           <!-- <label for="Answer1" style="display: inline-block;">Answer 1</label>
+            
+                            <input type="text" class="form-control" id="Answer1" placeholder=" Answer 1" name="Answer1" value=""
+                              required style="width: 300px;display: inline-block;">
+            
+                                        -->
+            
+            
+                              <input type="radio" id="" name="" value="true" onclick=""><label for="True">True</label><br>
+                              <input type="radio" id="" name="" value="false" onclick=""><label for="False">False</label><br>
+                            
+            
+            
+            
+                            <div class="btn btn-primary" style="display:inline-block" id="removeAnswer"
+                              onclick="trigger2delete(this)"><i class="fa fa-check-square-o"></i> remove Answer</div>
+                          </div>
+            
+                         
+            
+            
+            
+                        </div>
+                        <hr class="questionline">
+            
+                        <input type="text" class="answerlength" value="1" style="display:none">
+                        
+            
+                       </div>
+      
+
+        </div>
+      </div>
+    </div>
+    <script src="/Scripts/i2.js">
+
+
+    </script>
+
+<% include ../partials/footer.ejs %>

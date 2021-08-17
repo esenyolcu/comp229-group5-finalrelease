@@ -1,0 +1,83 @@
+<% include ../partials/header.ejs %>
+  <%- include ../partials/mainNav.ejs %>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>
+            <%= title %>
+          </h1>
+          <!--This buttomn create a question-->
+
+          <div class="col-md-6">
+          </div>
+
+          <div class="col-md-6 sticky">
+            
+
+            <div class="btn btn-primary sticky" id="addQuestion" style="display: none;"><i class="fa fa-check-square-o"></i> Add Question</div>
+          
+           
+          </div>
+
+          <div class="col-md-6 sticky">
+
+            <div class="btn btn-primary sticky" id="addQuestiontf" style="display: none;"><i class="fa fa-check-square-o"></i> Add Question</div>
+          
+           
+          </div>
+
+          <form class="form col-md-6" method="post" id="form" action="/surveys/finalcreate">
+            <div class="form-group">
+                <label>Survey Type</label><br>
+            <input required type="radio" id="" name="Questionnaire_type" value="multiplechoice" onclick=""><label for="html">Multiple Choice</label><br>
+            <input type="radio" id="" name="Questionnaire_type" value="true_or_false" onclick=""><label for="trueorfalse">True or False</label><br>
+            </div>
+
+            <div class="form-group">
+
+            
+
+              <label for="surveyNameTextField">Survey Name</label>
+
+              <input type="text" class="form-control" id="surveyNameTextField" placeholder="Survey Name"
+                name="surveyName" value="<%= survey.surveyName %>" required>
+            </div>
+            <div class="form-group">
+              <label for="startDateField">Start Date</label>
+              <input type="date" class="form-control" id="startDateField" placeholder="MM/DD/YYYY"
+                onfocus="(this.type='date')" name="startDate" value="<%= survey.startDate %>" required>
+            </div>
+            <div class="form-group">
+              <label for="endDateField">End Date</label>
+              <input type="date" class="form-control" id="endDateField" placeholder="End Date" name="endDate"
+                value="<%= survey.endDate %>"  placeholder="MM/DD/YYYY"
+                onfocus="(this.type='date')" required>
+            </div>
+            <div class="form-group">
+              <label for="surveyDescription">Description</label>
+              <textarea name="surveyDescription" class="form-control"
+                id="surveyDescription"><%= survey.surveyDescription %> </textarea>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Continue</button>
+            <a href="/surveys/continue" class="btn btn-warning"><i class="fa fa-undo"></i> Cancel</a>
+
+            <!--  Add Questions-->
+            <!-- this input serves as a counter for the questions number created--> 
+
+          </form>
+ 
+
+
+        </div>
+      </div>
+    </div>
+    <script src="/Scripts/i.js">
+
+
+    </script>
+
+    <% include ../partials/footer.ejs %>
